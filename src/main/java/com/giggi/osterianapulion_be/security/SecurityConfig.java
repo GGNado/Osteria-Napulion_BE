@@ -130,6 +130,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
 
+                        .requestMatchers("/api/tavoli/**").hasRole("ADMIN")
+                        .requestMatchers("/api/prenotazioni").hasRole("ADMIN")
+                        .requestMatchers("/api/bloccaPrenotazioni").hasRole("ADMIN")
+
+
                         // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )

@@ -49,7 +49,11 @@ public class AuthController {
         try {
             JwtResponse jwtResponse = authService.authenticateUser(loginRequest);
             log.info("Login successful for user: {}", loginRequest.getUsernameOrEmail());
-            return ResponseEntity.ok(jwtResponse);
+            //return ResponseEntity.ok(jwtResponse);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .header("Authorization", jwtResponse.getToken())
+                    .body(jwtResponse);
         } catch (Exception e) {
             log.error("Login failed for user: {} - Error: {}", loginRequest.getUsernameOrEmail(), e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
