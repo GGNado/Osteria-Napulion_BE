@@ -23,6 +23,7 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
     private final PrenotazioneRepository prenotazioneRepository;
     private final PrenotazioneResolver prenotazioneResolver;
     private final AssegnazioneTavoloPolicy policy;
+    private final EmailServiceImpl emailService;
 
     @Override
     public Prenotazione save(Prenotazione prenotazione) {
@@ -30,7 +31,9 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
         PrenotazioneContext context = prenotazioneResolver.resolve(prenotazione);
         Tavolo tavolo = policy.assegnaTavolo(context);
         prenotazione.setTavolo(tavolo);
-        return prenotazioneRepository.save(prenotazione);
+        Prenotazione p = prenotazioneRepository.save(prenotazione);
+        emailService.sendConfermaPrenotazione(p.getEmailCliente(), prenotazione);
+        return p;
     }
 
     @Override
