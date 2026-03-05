@@ -218,6 +218,10 @@ git branch
 ### Log compatto e grafico
 ```bash
 git log --oneline --graph --decorate --all
+
+git fetch
+git log --oneline --decorate --graph --left-right --cherry-pick origin/main...main
+git log --oneline --decorate --graph --left-right --cherry-pick origin/develop...develop
 ```
 
 ### Stash (salva lavoro non committato)
