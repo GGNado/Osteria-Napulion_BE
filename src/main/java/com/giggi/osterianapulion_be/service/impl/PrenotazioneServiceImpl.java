@@ -1,7 +1,6 @@
 package com.giggi.osterianapulion_be.service.impl;
 
 import com.giggi.osterianapulion_be.entity.Tavolo;
-import com.giggi.osterianapulion_be.mapper.PrenotazioneMapper;
 import com.giggi.osterianapulion_be.policy.AssegnazioneTavoloPolicy;
 import com.giggi.osterianapulion_be.resolver.prenotazione.PrenotazioneContext;
 import com.giggi.osterianapulion_be.resolver.prenotazione.PrenotazioneResolver;
@@ -24,7 +23,6 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
     private final PrenotazioneRepository prenotazioneRepository;
     private final PrenotazioneResolver prenotazioneResolver;
     private final AssegnazioneTavoloPolicy policy;
-    private final PrenotazioneMapper mapper;
 
     @Override
     public Prenotazione save(Prenotazione prenotazione) {

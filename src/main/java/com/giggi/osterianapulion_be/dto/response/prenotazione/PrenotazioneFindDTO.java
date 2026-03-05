@@ -8,6 +8,7 @@ import lombok.Setter;
 public class PrenotazioneFindDTO {
     private Long id;
     private String nomeCliente;
-    private String nomeTavolo;
+    private String dataOra;
+    private int coperti;
 
 }

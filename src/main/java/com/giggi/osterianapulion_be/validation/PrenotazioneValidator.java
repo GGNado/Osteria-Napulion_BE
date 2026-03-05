@@ -26,6 +26,11 @@ public class PrenotazioneValidator {
             throw new ReservationUnavailableException("Orario non prenotabile (19:00-23:00).");
         }
 
+        log.info("Validazione Data/Ora superiore ad ora di alemno 5 minuti.....");
+        if (p.getDataOra().isBefore(LocalDateTime.now().plusMinutes(5))) {
+            throw new ReservationUnavailableException("Data/Ora non valida (5 minuti di anticipo).");
+        }
+
         log.info("Orario Validato.");
         log.info("Validazione Coperti 1-10.....");
 
