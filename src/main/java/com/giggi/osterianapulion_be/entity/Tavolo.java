@@ -19,11 +19,16 @@ public class Tavolo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String nome;
 
+    @Column(nullable = false)
     private int minimoPosti;
+
+    @Column(nullable = false)
     private int massimoPosti;
 
+    @Column(nullable = false)
     private boolean attivo;
 
     @OneToMany(mappedBy = "tavolo", cascade = CascadeType.ALL)

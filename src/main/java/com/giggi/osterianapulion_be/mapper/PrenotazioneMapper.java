@@ -1,14 +1,13 @@
 package com.giggi.osterianapulion_be.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
 import com.giggi.osterianapulion_be.entity.Prenotazione;
-import com.giggi.osterianapulion_be.dto.request.Prenotazione.PrenotazioneCreateRequestDTO;
-import com.giggi.osterianapulion_be.dto.request.Prenotazione.PrenotazioneUpdateRequestDTO;
-import com.giggi.osterianapulion_be.dto.response.Prenotazione.PrenotazioneFindDTO;
+import com.giggi.osterianapulion_be.dto.request.prenotazione.PrenotazioneCreateRequestDTO;
+import com.giggi.osterianapulion_be.dto.request.prenotazione.PrenotazioneUpdateRequestDTO;
+import com.giggi.osterianapulion_be.dto.response.prenotazione.PrenotazioneFindDTO;
 
 @Mapper(componentModel = "spring")
 public interface PrenotazioneMapper {

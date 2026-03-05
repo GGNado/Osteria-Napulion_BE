@@ -1,4 +1,4 @@
-package com.giggi.osterianapulion_be.dto.response.Tavolo;
+package com.giggi.osterianapulion_be.dto.response.tavolo;
 
 import lombok.Getter;
 import lombok.Setter;
