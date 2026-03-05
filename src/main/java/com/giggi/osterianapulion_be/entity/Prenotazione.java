@@ -35,10 +35,7 @@ public class Prenotazione {
     private String telefonoCliente;
 
     @Column(nullable = false)
-    private LocalDate data;
-
-    @Column(nullable = false)
-    private LocalTime orario;
+    private LocalDateTime dataOra;
 
     private int coperti;
 

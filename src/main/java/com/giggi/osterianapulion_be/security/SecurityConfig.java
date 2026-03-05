@@ -130,6 +130,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
 
+                        .requestMatchers(HttpMethod.POST, "/api/prenotazioni").permitAll()
+
                         .requestMatchers("/api/tavoli/**").hasRole("ADMIN")
                         .requestMatchers("/api/prenotazioni").hasRole("ADMIN")
                         .requestMatchers("/api/bloccaPrenotazioni").hasRole("ADMIN")

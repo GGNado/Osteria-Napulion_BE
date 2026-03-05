@@ -1,4 +1,4 @@
-package com.giggi.osterianapulion_be.dto.request.BloccaPrenotazione;
+package com.giggi.osterianapulion_be.dto.request.bloccaPrenotazione;
 
 import lombok.Getter;
 import lombok.Setter;
