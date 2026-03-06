@@ -22,7 +22,6 @@ public class AssegnazioneTavoloSmartPolicy implements AssegnazioneTavoloPolicy{
                 .map(p -> p.getTavolo().getId())
                 .collect(Collectors.toSet());
 
-        // Sceglie il tavolo libero con meno posti (meno spreco)
         return context.getTavoliCompatibili()
                 .stream()
                 .filter(t -> !tavoliOccupati.contains(t.getId()))
