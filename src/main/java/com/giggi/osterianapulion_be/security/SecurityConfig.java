@@ -116,9 +116,6 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
-                        // Public endpoints - Actuator health check
-                        .requestMatchers("/actuator/health").permitAll()
-
                         .requestMatchers("/api/utentes/**").hasRole("USER")
 
                         // Admin only endpoints
