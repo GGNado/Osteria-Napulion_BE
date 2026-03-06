@@ -6,16 +6,16 @@ import com.giggi.osterianapulion_be.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
-
     @Override
-    public void sendConfermaPrenotazione(String destinatario, Prenotazione prenotazione) {
-
+    @Async
+    public void sendConfermaPrenotazioneAsync(String destinatario, Prenotazione prenotazione) {
         String dataOra = prenotazione.getDataOra() != null
                 ? prenotazione.getDataOra().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy 'alle' HH:mm"))
                 : "data/ora non disponibile";

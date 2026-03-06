@@ -6,6 +6,8 @@ import com.giggi.osterianapulion_be.resolver.prenotazione.PrenotazioneContext;
 import com.giggi.osterianapulion_be.resolver.prenotazione.PrenotazioneResolver;
 import com.giggi.osterianapulion_be.validation.PrenotazioneValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import com.giggi.osterianapulion_be.entity.Prenotazione;
 import com.giggi.osterianapulion_be.repository.PrenotazioneRepository;
 import com.giggi.osterianapulion_be.service.PrenotazioneService;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -27,12 +30,19 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 
     @Override
     public Prenotazione save(Prenotazione prenotazione) {
+        StopWatch sw = new StopWatch();
+        sw.start();
+
         prenotazioneValidator.validate(prenotazione);
         PrenotazioneContext context = prenotazioneResolver.resolve(prenotazione);
         Tavolo tavolo = policy.assegnaTavolo(context);
         prenotazione.setTavolo(tavolo);
         Prenotazione p = prenotazioneRepository.save(prenotazione);
-        emailService.sendConfermaPrenotazione(p.getEmailCliente(), prenotazione);
+        emailService.sendConfermaPrenotazioneAsync(p.getEmailCliente(), prenotazione);
+
+        sw.stop();
+        log.info("Prenotazione salvata in {}ms", sw.getTime());
+
         return p;
     }
 
