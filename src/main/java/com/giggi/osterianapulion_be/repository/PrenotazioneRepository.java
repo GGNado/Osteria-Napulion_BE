@@ -13,4 +13,6 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Long
     List<Prenotazione> findByDataOraBetween(LocalDateTime data, LocalDateTime data2);
 
     boolean existsBytelefonoClienteAndDataOraBetween(String telefonoCliente, LocalDateTime data, LocalDateTime data2);
+
+    Long id(Long id);
 }

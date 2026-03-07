@@ -4,5 +4,6 @@ public enum StatoPrenotazione {
     CONFERMATA,
     ANNULLATA,
     IN_ATTESA,
+    SEDUTO,
     COMPLETATA
 }
