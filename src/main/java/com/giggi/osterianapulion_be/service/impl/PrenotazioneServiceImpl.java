@@ -1,7 +1,11 @@
 package com.giggi.osterianapulion_be.service.impl;
 
+import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 import com.giggi.osterianapulion_be.entity.Tavolo;
-import com.giggi.osterianapulion_be.policy.AssegnazioneTavoloPolicy;
+import com.giggi.osterianapulion_be.exception.prenotazione.ReservationNotFoundException;
+import com.giggi.osterianapulion_be.policy.prenotazione.HandlePrenotazione;
+import com.giggi.osterianapulion_be.policy.prenotazione.HandlerPrenotazionePolicy;
+import com.giggi.osterianapulion_be.policy.tavolo.AssegnazioneTavoloPolicy;
 import com.giggi.osterianapulion_be.resolver.prenotazione.PrenotazioneContext;
 import com.giggi.osterianapulion_be.resolver.prenotazione.PrenotazioneResolver;
 import com.giggi.osterianapulion_be.validation.PrenotazioneValidator;
@@ -11,6 +15,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.giggi.osterianapulion_be.entity.Prenotazione;
@@ -25,6 +30,7 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
     private final PrenotazioneValidator prenotazioneValidator;
     private final PrenotazioneRepository prenotazioneRepository;
     private final PrenotazioneResolver prenotazioneResolver;
+    private final HandlePrenotazione handlePrenotazione;
     private final AssegnazioneTavoloPolicy policy;
     private final EmailServiceImpl emailService;
 
@@ -37,8 +43,9 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
         PrenotazioneContext context = prenotazioneResolver.resolve(prenotazione);
         Tavolo tavolo = policy.assegnaTavolo(context);
         prenotazione.setTavolo(tavolo);
+        prenotazione.setStato(StatoPrenotazione.IN_ATTESA);
         Prenotazione p = prenotazioneRepository.save(prenotazione);
-        emailService.sendConfermaPrenotazioneAsync(p.getEmailCliente(), prenotazione);
+        emailService.sendRicezionePrenotazioneAsync(p.getEmailCliente(), prenotazione);
 
         sw.stop();
         log.info("Prenotazione salvata in {}ms", sw.getTime());
@@ -64,5 +71,26 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
     @Override
     public Prenotazione findById(Long id) {
         return prenotazioneRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Prenotazione> findAllFromDate(LocalDate date) {
+        return prenotazioneRepository
+                .findByDataOraBetween(
+                        date.atTime(0, 0),
+                        date.atTime(23, 59)
+                );
+    }
+
+    @Override
+    public Prenotazione setStato(StatoPrenotazione statoPrenotazione, Long idPrenotazione) {
+        Prenotazione prenotazione = prenotazioneRepository.findById(idPrenotazione).orElseThrow(
+                () -> new ReservationNotFoundException("Prenotazione non trovata con id " + idPrenotazione)
+        );
+        prenotazioneValidator.validate(prenotazione, statoPrenotazione);
+        prenotazione.setStato(statoPrenotazione);
+        handlePrenotazione.handleStateChangeEvent(prenotazione);
+
+        return prenotazioneRepository.save(prenotazione);
     }
 }

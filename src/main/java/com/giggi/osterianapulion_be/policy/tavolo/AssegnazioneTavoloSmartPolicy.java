@@ -1,4 +1,4 @@
-package com.giggi.osterianapulion_be.policy;
+package com.giggi.osterianapulion_be.policy.tavolo;
 
 import com.giggi.osterianapulion_be.entity.Tavolo;
 import com.giggi.osterianapulion_be.exception.prenotazione.ReservationUnavailableException;

@@ -1,8 +1,11 @@
 package com.giggi.osterianapulion_be.service;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import com.giggi.osterianapulion_be.entity.Prenotazione;
+import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 
 public interface PrenotazioneService {
     Prenotazione save(Prenotazione prenotazione);
@@ -14,4 +17,8 @@ public interface PrenotazioneService {
     List<Prenotazione> findAll();
 
     Prenotazione findById(Long id);
+
+    List<Prenotazione> findAllFromDate(LocalDate date);
+
+    Prenotazione setStato(StatoPrenotazione statoPrenotazione, Long idPrenotazione);
 }

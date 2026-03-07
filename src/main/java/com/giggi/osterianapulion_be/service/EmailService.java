@@ -5,5 +5,11 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface EmailService {
     @Async
-    void sendConfermaPrenotazioneAsync(String destinatario, Prenotazione res);
+    void sendRicezionePrenotazioneAsync(String destinatario, Prenotazione prenotazione);
+
+    @Async
+    void sendConfermaPrenotazioneAsync(String destinatario, Prenotazione prenotazione);
+
+    @Async
+    void sendRifiutoPrenotazioneAsync(String destinatario, Prenotazione prenotazione);
 }

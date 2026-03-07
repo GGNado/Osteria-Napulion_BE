@@ -1,6 +1,8 @@
 package com.giggi.osterianapulion_be.validation;
 
 import com.giggi.osterianapulion_be.entity.Prenotazione;
+import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
+import com.giggi.osterianapulion_be.exception.prenotazione.ReservationNotFoundException;
 import com.giggi.osterianapulion_be.exception.prenotazione.ReservationUnavailableException;
 import com.giggi.osterianapulion_be.repository.PrenotazioneRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -38,6 +41,12 @@ public class PrenotazioneValidator {
         validatePrenotazioneDuplicataPerTelefono(p);
 
         log.info("Prenotazione validata con successo.");
+    }
+
+    public void validate(Prenotazione p, StatoPrenotazione statoPrenotazione) {
+        if (p.getStato() == statoPrenotazione) {
+            throw new ReservationUnavailableException("La prenotazione è già nello stato " + statoPrenotazione);
+        }
     }
 
     private void validateTelefono(String telefono) {
