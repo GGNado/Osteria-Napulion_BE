@@ -1,5 +1,6 @@
 package com.giggi.osterianapulion_be.service.impl;
 
+import com.giggi.osterianapulion_be.dto.response.prenotazione.DataCounterDTO;
 import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 import com.giggi.osterianapulion_be.entity.Tavolo;
 import com.giggi.osterianapulion_be.exception.prenotazione.ReservationNotFoundException;
@@ -16,7 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.giggi.osterianapulion_be.entity.Prenotazione;
 import com.giggi.osterianapulion_be.repository.PrenotazioneRepository;
@@ -92,5 +97,26 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
         handlePrenotazione.handleStateChangeEvent(prenotazione);
 
         return prenotazioneRepository.save(prenotazione);
+    }
+
+    @Override
+    public DataCounterDTO countPrenotazioniByMonth() {
+        LocalDate now = LocalDate.now();
+        LocalDateTime inizio = now.withDayOfMonth(1).atStartOfDay();
+        LocalDateTime fine = now.withDayOfMonth(now.lengthOfMonth()).atTime(23, 59, 59);
+
+        Map<LocalDate, Integer> counter = prenotazioneRepository
+                .countByGiorno(inizio, fine)
+                .stream()
+                .collect(Collectors.toMap(
+                        row -> (LocalDate) row[0],
+                        row -> ((Long) row[1]).intValue()
+                ));
+
+        // Riempie i giorni mancanti con 0
+        now.withDayOfMonth(1).datesUntil(fine.toLocalDate().plusDays(1))
+                .forEach(date -> counter.putIfAbsent(date, 0));
+
+        return new DataCounterDTO(counter);
     }
 }
