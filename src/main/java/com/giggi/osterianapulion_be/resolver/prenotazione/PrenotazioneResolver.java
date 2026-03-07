@@ -33,7 +33,7 @@ public class PrenotazioneResolver {
                 );
 
         List<Prenotazione> prenotazioniEsistenti = prenotazioneRepository
-                .findByDataOraBetween(
+                .findByDataOraBetweenAndTavoloIsNotNull(
                         request.getDataOra().minusHours(finestraOrePrima),
                         request.getDataOra().plusHours(finestraOreDopo)
                 );
