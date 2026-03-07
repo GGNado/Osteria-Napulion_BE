@@ -2,6 +2,7 @@ package com.giggi.osterianapulion_be.controller;
 
 import com.giggi.osterianapulion_be.dto.request.prenotazione.PrenotazioneCreateRequestDTO;
 import com.giggi.osterianapulion_be.dto.request.prenotazione.PrenotazioneUpdateRequestDTO;
+import com.giggi.osterianapulion_be.dto.response.prenotazione.PrenotazioneFindAllDTO;
 import com.giggi.osterianapulion_be.dto.response.prenotazione.PrenotazioneFindDTO;
 import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 import com.giggi.osterianapulion_be.mapper.PrenotazioneMapper;
@@ -24,8 +25,12 @@ public class PrenotazioneController {
     private final PrenotazioneMapper prenotazioneMapper;
 
     @GetMapping
-    public List<Prenotazione> getAllPrenotazioni() {
-        return prenotazioneService.findAll();
+    public PrenotazioneFindAllDTO getAllPrenotazioni() {
+        return new PrenotazioneFindAllDTO(
+                prenotazioneService.findAll().stream()
+                        .map(prenotazioneMapper::convert)
+                        .toList()
+                );
     }
 
     @PostMapping

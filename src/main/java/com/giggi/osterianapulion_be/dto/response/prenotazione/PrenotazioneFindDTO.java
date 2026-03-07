@@ -12,6 +12,7 @@ public class PrenotazioneFindDTO {
     private String dataOra;
     private StatoPrenotazione stato;
     private String telefonoCliente;
+    private String tavolo;
     private int coperti;
 
 }
