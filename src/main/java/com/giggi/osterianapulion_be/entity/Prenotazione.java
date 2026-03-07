@@ -43,7 +43,7 @@ public class Prenotazione {
     private StatoPrenotazione stato;
 
     @ManyToOne
-    @JoinColumn(name = "tavolo_id", nullable = false)
+    @JoinColumn(name = "tavolo_id", nullable = true)
     private Tavolo tavolo;
 
     @CreatedDate
