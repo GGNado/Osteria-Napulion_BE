@@ -1,0 +1,15 @@
+package com.giggi.osterianapulion_be.service;
+
+import com.giggi.osterianapulion_be.entity.Prenotazione;
+import org.springframework.scheduling.annotation.Async;
+
+public interface EmailService {
+    @Async
+    void sendRicezionePrenotazioneAsync(String destinatario, Prenotazione prenotazione);
+
+    @Async
+    void sendConfermaPrenotazioneAsync(String destinatario, Prenotazione prenotazione);
+
+    @Async
+    void sendRifiutoPrenotazioneAsync(String destinatario, Prenotazione prenotazione);
+}

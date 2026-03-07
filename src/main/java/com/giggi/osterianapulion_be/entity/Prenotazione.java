@@ -35,10 +35,7 @@ public class Prenotazione {
     private String telefonoCliente;
 
     @Column(nullable = false)
-    private LocalDate data;
-
-    @Column(nullable = false)
-    private LocalTime orario;
+    private LocalDateTime dataOra;
 
     private int coperti;
 
@@ -46,7 +43,7 @@ public class Prenotazione {
     private StatoPrenotazione stato;
 
     @ManyToOne
-    @JoinColumn(name = "tavolo_id", nullable = false)
+    @JoinColumn(name = "tavolo_id", nullable = true)
     private Tavolo tavolo;
 
     @CreatedDate

@@ -116,9 +116,6 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
-                        // Public endpoints - Actuator health check
-                        .requestMatchers("/actuator/health").permitAll()
-
                         .requestMatchers("/api/utentes/**").hasRole("USER")
 
                         // Admin only endpoints
@@ -129,6 +126,8 @@ public class SecurityConfig {
                         // User endpoints - authenticated users
                         .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/api/prenotazioni").permitAll()
 
                         .requestMatchers("/api/tavoli/**").hasRole("ADMIN")
                         .requestMatchers("/api/prenotazioni").hasRole("ADMIN")
