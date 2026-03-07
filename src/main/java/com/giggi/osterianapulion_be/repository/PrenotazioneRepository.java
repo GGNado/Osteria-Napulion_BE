@@ -3,6 +3,8 @@ package com.giggi.osterianapulion_be.repository;
 import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.giggi.osterianapulion_be.entity.Prenotazione;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -19,4 +21,11 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Long
     Long id(Long id);
 
     List<Prenotazione> findByDataOraBetweenAndTavoloIsNotNull(LocalDateTime localDateTime, LocalDateTime localDateTime1);
+
+    @Query("SELECT DATE(p.dataOra) as giorno, COUNT(p) as totale " +
+            "FROM Prenotazione p " +
+            "WHERE p.dataOra >= :inizio AND p.dataOra <= :fine " +
+            "GROUP BY DATE(p.dataOra)")
+    List<Object[]> countByGiorno(@Param("inizio") LocalDateTime inizio,
+                                 @Param("fine") LocalDateTime fine);
 }

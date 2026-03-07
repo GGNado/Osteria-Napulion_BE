@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+import com.giggi.osterianapulion_be.dto.response.prenotazione.DataCounterDTO;
 import com.giggi.osterianapulion_be.entity.Prenotazione;
 import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 
@@ -21,4 +22,6 @@ public interface PrenotazioneService {
     List<Prenotazione> findAllFromDate(LocalDate date);
 
     Prenotazione setStato(StatoPrenotazione statoPrenotazione, Long idPrenotazione);
+
+    DataCounterDTO countPrenotazioniByMonth();
 }

@@ -2,6 +2,7 @@ package com.giggi.osterianapulion_be.controller;
 
 import com.giggi.osterianapulion_be.dto.request.prenotazione.PrenotazioneCreateRequestDTO;
 import com.giggi.osterianapulion_be.dto.request.prenotazione.PrenotazioneUpdateRequestDTO;
+import com.giggi.osterianapulion_be.dto.response.prenotazione.DataCounterDTO;
 import com.giggi.osterianapulion_be.dto.response.prenotazione.PrenotazioneFindAllDTO;
 import com.giggi.osterianapulion_be.dto.response.prenotazione.PrenotazioneFindDTO;
 import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
@@ -69,6 +70,16 @@ public class PrenotazioneController {
                 )
         );
     }
+
+    @GetMapping("/month/counter")
+    public ResponseEntity<DataCounterDTO> getPrenotazioneCounterByMonth(
+    ){
+        return ResponseEntity.ok(
+                prenotazioneService.countPrenotazioniByMonth()
+        );
+    }
+
+
 
 
 }
