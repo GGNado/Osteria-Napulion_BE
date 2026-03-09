@@ -119,4 +119,9 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 
         return new DataCounterDTO(counter);
     }
+
+    @Override
+    public Prenotazione resendEmail(Prenotazione prenotazione) {
+        return null;
+    }
 }

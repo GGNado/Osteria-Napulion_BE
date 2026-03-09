@@ -24,4 +24,6 @@ public interface PrenotazioneService {
     Prenotazione setStato(StatoPrenotazione statoPrenotazione, Long idPrenotazione);
 
     DataCounterDTO countPrenotazioniByMonth();
+
+    Prenotazione resendEmail(Prenotazione prenotazione);
 }

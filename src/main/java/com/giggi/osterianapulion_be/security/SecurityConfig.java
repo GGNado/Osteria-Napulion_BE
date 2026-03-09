@@ -128,6 +128,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
 
                         .requestMatchers(HttpMethod.POST, "/api/prenotazioni").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/prenotazioni/resend-email").permitAll()
 
                         .requestMatchers("/api/tavoli/**").hasRole("ADMIN")
                         .requestMatchers("/api/prenotazioni").hasRole("ADMIN")

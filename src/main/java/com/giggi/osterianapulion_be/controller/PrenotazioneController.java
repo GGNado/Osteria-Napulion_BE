@@ -79,7 +79,16 @@ public class PrenotazioneController {
         );
     }
 
-
-
-
+    @PostMapping("/resend-email")
+    public ResponseEntity<PrenotazioneFindDTO> resendEmail(
+            @RequestBody PrenotazioneCreateRequestDTO prenotazioneCreateRequestDTO
+    ) {
+        return ResponseEntity.ok(
+                prenotazioneMapper.convert(
+                        prenotazioneService.resendEmail(
+                                prenotazioneMapper.convert(prenotazioneCreateRequestDTO)
+                        )
+                )
+        );
+    }
 }
