@@ -1,5 +1,7 @@
 package com.giggi.osterianapulion_be.service.impl;
 
+import com.giggi.osterianapulion_be.aop.annotation.PreventDuplicateSubmission;
+import com.giggi.osterianapulion_be.aop.annotation.RateLimit;
 import com.giggi.osterianapulion_be.dto.response.prenotazione.DataCounterDTO;
 import com.giggi.osterianapulion_be.entity.StatoPrenotazione;
 import com.giggi.osterianapulion_be.entity.Tavolo;
@@ -40,10 +42,9 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
     private final EmailServiceImpl emailService;
 
     @Override
+    @PreventDuplicateSubmission(lockDurationMs = 10000)
+    @RateLimit(requests = 1, durationSeconds = 10)
     public Prenotazione save(Prenotazione prenotazione) {
-        StopWatch sw = new StopWatch();
-        sw.start();
-
         prenotazioneValidator.validate(prenotazione);
         PrenotazioneContext context = prenotazioneResolver.resolve(prenotazione);
         Tavolo tavolo = policy.assegnaTavolo(context);
@@ -51,10 +52,6 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
         prenotazione.setStato(StatoPrenotazione.IN_ATTESA);
         Prenotazione p = prenotazioneRepository.save(prenotazione);
         emailService.sendRicezionePrenotazioneAsync(p.getEmailCliente(), prenotazione);
-
-        sw.stop();
-        log.info("Prenotazione salvata in {}ms", sw.getTime());
-
         return p;
     }
 
