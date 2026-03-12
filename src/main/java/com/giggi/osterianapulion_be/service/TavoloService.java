@@ -9,6 +9,8 @@ public interface TavoloService {
 
     Tavolo update(Tavolo tavolo);
 
+    List<Tavolo> updateSchema(List<Tavolo> tavoli);
+
     void deleteById(Long id);
 
     List<Tavolo> findAll();

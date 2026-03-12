@@ -31,6 +31,15 @@ public class Tavolo {
     @Column(nullable = false)
     private boolean attivo;
 
+    @Column(nullable = false)
+    private int x = 0;
+
+    @Column(nullable = false)
+    private int y = 0;
+
+    @Transient
+    private Boolean isNew = false;
+
     @OneToMany(mappedBy = "tavolo", cascade = CascadeType.ALL)
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 
