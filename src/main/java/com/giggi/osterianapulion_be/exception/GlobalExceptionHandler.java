@@ -3,6 +3,7 @@ package com.giggi.osterianapulion_be.exception;
 import com.giggi.osterianapulion_be.aop.exception.RateLimiterException;
 import com.giggi.osterianapulion_be.exception.prenotazione.ReservationNotFoundException;
 import com.giggi.osterianapulion_be.exception.prenotazione.ReservationUnavailableException;
+import com.giggi.osterianapulion_be.exception.tavolo.TavoloAttributoException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,5 +89,15 @@ public class GlobalExceptionHandler {
         body.put("error", "Troppe richieste da parte di questo IP");
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.TOO_MANY_REQUESTS);
+    }
+
+    @ExceptionHandler(TavoloAttributoException.class)
+    public ResponseEntity<Object> handleTavoloAttributoException(TavoloAttributoException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Bad Request");
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,11 +1,11 @@
-package com.giggi.osterianapulion_be.dto.response.tavolo;
+package com.giggi.osterianapulion_be.dto.request.tavolo;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class TavoloFindDTO {
+@Setter
+public class TavoloUpdateSchemaDTO {
     private Long id;
     private String nome;
     private int minimoPosti;
@@ -13,5 +13,5 @@ public class TavoloFindDTO {
     private boolean attivo;
     private int x;
     private int y;
-    // Altri campi
+    private Boolean isNew;
 }
