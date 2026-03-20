@@ -13,6 +13,7 @@ public class PrenotazioneFindDTO {
     private StatoPrenotazione stato;
     private String telefonoCliente;
     private String tavolo;
+    private Long tavoloId;
     private int coperti;
 
 }

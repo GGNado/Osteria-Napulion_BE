@@ -18,6 +18,7 @@ public interface PrenotazioneMapper {
     Prenotazione convert(PrenotazioneUpdateRequestDTO dto);
 
     @Mapping(target = "tavolo", source = "tavolo.nome")
+    @Mapping(target = "tavoloId", source = "tavolo.id")
     PrenotazioneFindDTO convert(Prenotazione entity);
 
     List<PrenotazioneFindDTO> convert(List<Prenotazione> entities);
